@@ -24,6 +24,7 @@ module.exports = createReactClass({
       activeDimensions: [],
       reduce: function() {},
       tableClassName: '',
+      csvDownloadEnabled: true,
       csvDownloadFileName: 'table.csv',
       csvTemplateFormat: false,
       defaultStyles: true,
@@ -131,11 +132,15 @@ module.exports = createReactClass({
           hiddenColumns={this.state.hiddenColumns}
           onChange={this.setHiddenColumns} />
 
-        <div className="reactPivot-csvExport">
-          <button onClick={partial(this.downloadCSV, this.state.rows)}>
-            Export CSV
-          </button>
-        </div>
+        {
+          this.props.csvDownloadEnabled ?
+          <div className="reactPivot-csvExport">
+            <button onClick={partial(this.downloadCSV, this.state.rows)}>
+              Export CSV
+            </button>
+          </div>
+          : null
+        }
 
         { Object.keys(this.state.solo).map(function (title) {
           var value = self.state.solo[title]
